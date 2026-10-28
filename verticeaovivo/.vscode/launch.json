@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+    // Atualizações de configuração de depuração
+    // 03/02/2026 - Depuração de scripts Bash, Python e C# .NET
+    // Para que o VS Code possa debugar scripts Bash é necessário instalar a extensão "Bash Debug" de rogalmic.
+    // Via Bash: code --install-extension rogalmic.bash-debug
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "bashdb",
+            "request": "launch",
+            "name": "Bash-Debug Simple",
+            "program": "${file}",
+            "pathBash": "D:\\Program Files\\Git\\bin\\bash.exe",
+            // "cwd": "D:\\Git-Projetos\\Bash\\Estrutura-Projeto\\app",
+            "cwd": "${fileDirname}",
+            //"showDebugOutput": true,
+            "trace": true
+        }
+    ]
+}

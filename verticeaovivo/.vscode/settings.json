@@ -1,0 +1,71 @@
+{
+    "jupyter.interactiveWindow.cellMarker.codeRegex": "^# COMMAND ----------|^# Databricks notebook source|^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
+    "jupyter.interactiveWindow.cellMarker.default": "# COMMAND ----------",
+    "python.testing.pytestArgs": [
+        "."
+    ],
+	    "files.associations": {
+        "**/.gitkeep": "markdown"
+    },
+    // Formatação automática ao salvar para manter o padrão do projeto [3, 7]
+    // Esconde pastas de cache e ambiente virtual para limpar o Explorer [4, 8]
+    "files.exclude": {
+        "**/__pycache__": false,
+        ".pytest_cache": true,
+        "**/.venv": false,
+        "**/.git": false,
+        "**/*.egg-info": true,
+        "**/__pycache__": true,
+        "dist": true,		
+    },
+    // Configurações específicas para arquivos Python
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    // Configurações para o Black Formatter
+    "black-formatter.path": [
+        "${workspaceFolder}/.venv/Scripts/blue"
+    ],
+    "black-formatter.args": [
+        "--line-length=79"
+    ],
+    // Configurações ISORT
+    "isort.path": [
+        "${workspaceFolder}/.venv/Scripts/isort"
+    ],
+    "isort.args": [
+        "--profile=black",
+        "--line-length=79"
+    ],
+    // Configurações gerais do PYTHON
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    // Garante que o terminal use o ambiente virtual do Poetry automaticamente
+    "python.terminal.activateEnvironment": true,
+    // Habilita a análise de código e sugestões inteligentes [5, 6]
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    // Seleciona o interpretador Python (o VS Code geralmente detecta o venv do Poetry)
+    "terminal.integrated.profiles.windows": {
+        "Git Bash": {
+            "path": "D:\\Program Files\\Git\\bin\\bash.exe",
+            "icon": "terminal-bash"
+        }
+    },
+    // Pylance settings (VS Code)
+    // Set typeCheckingMode to "basic" to enable type checking!
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": ["src", "lib", "resources"],
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.stubPath": ".vscode",
+
+    // Pyright settings (Cursor)
+    // Set typeCheckingMode to "basic" to enable type checking!
+    "cursorpyright.analysis.typeCheckingMode": "off",
+    "cursorpyright.analysis.extraPaths": ["src", "lib", "resources"],
+    "cursorpyright.analysis.diagnosticMode": "workspace",
+    "cursorpyright.analysis.stubPath": ".vscode",
+}
