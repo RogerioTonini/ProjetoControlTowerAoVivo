@@ -10,22 +10,22 @@ O projeto **verticeaovivo** foi gerado utilizando o template **default-python**.
 
 ## Sequencia de comandos para criação, configuração e inicialização do projeto
 
-1. Realizar o login
-   `$ databricks auth login --profile DEFAULT`
+**1.** Realizar o login
+`$ databricks auth login --profile DEFAULT`
 
-2. Listar todas as tabelas do catálogo
-   `$ databricks experimental aitools tools query "SHOW TABLES IN lakehouse_vertice.bronze" --profile DEFAULT`
+**2.** Listar todas as tabelas do catálogo
+`$ databricks experimental aitools tools query "SHOW TABLES IN lakehouse_vertice.bronze" --profile DEFAULT`
 
-3. Listar os dados do profile
-   `$ databricks auth describe --profile DEFAULT`
+**3.** Listar os dados do profile
+`$ databricks auth describe --profile DEFAULT`
 
-   Host: https://dbc-068fb8ed-9845.cloud.databricks.com
+Host: https://dbc-068fb8ed-9845.cloud.databricks.com
 
-   User: rt.data.eng.analytics@gmail.com
+User: rt.data.eng.analytics@gmail.com
 
-   Authenticated with: databricks-cli
+Authenticated with: databricks-cli
 
-   Token storage: secure, OS keyring (service: databricks-cli) (from auth_storage in [__settings__] section of C:/Users/<user>/.databrickscfg)
+Token storage: secure, OS keyring (service: databricks-cli) (from auth_storage in [__settings__] section of C:/Users/<user>/.databrickscfg)
 
 ---
 
@@ -41,41 +41,54 @@ O projeto **verticeaovivo** foi gerado utilizando o template **default-python**.
 **✓ audience:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/v1/token
 **✓ discovery_url:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/.well-known/oauth-authorization-server
 
-4. Inicializar o DATABRICKS no repositório (com padrão python)
-   `$ databricks bundle init default-python`
+**4.** Inicializar o DATABRICKS no repositório (com padrão python)
+`$ databricks bundle init default-python`
 
 **Importante:**
 
     a. Apagar o conteúdo das pastas: resources/, src/ e tests/
     b. Alterar o nome da pasta my_project para o nome real do projeto nos arquivos: databricks.yml e pyproject.toml
 
-5. Listar todos os JOBs do catalogo
-   `$ databricks jobs list --profile DEFAULT`
+**5.** Listar todos os JOBs do catalogo
+`$ databricks jobs list --profile DEFAULT`
 
 **Resposta:**
 `<id_job>  Ingestão`
 
-6. Com o código(s) do(s) JOB(s), gerar uma cópia os arquivos contidos no catalogo do projeto para a pasta src/ e na pasta recources/
-   `$ databricks bundle generate job --existing-job-id <id_job> --profile DEFAULT`
+**6.** Com o código(s) do(s) JOB(s), gerar uma cópia os arquivos contidos no catalogo do projeto para a pasta src/ e na pasta recources/
+`$ databricks bundle generate job --existing-job-id <id_job> --profile DEFAULT`
 
-7. Instalar as skills do DATABRICKS
-   `$ databricks aitools install --agents claude-code --scope project --skills-only --experimental`
+**7.** Instalar as skills do DATABRICKS
+`$ databricks aitools install --agents claude-code --scope project --skills-only --experimental`
 
-8. Seleciona a versão do python para criação do ambiente virtual
-   `$ uv python pin 3.12.10`
+**8.** Seleciona a versão do python para criação do ambiente virtual
+`$ uv python pin 3.12.10`
 
 **Importante:** Somente a versão 3.12 aceita
 
-9. Cria o ambiente virtual
-   `$ uv venv [--seed]`
+**9.** Cria o ambiente virtual
+`$ uv venv [--seed]`
 
 **Importante:** O parâmetro [--seed] instala o pip no ambiente virtual
 
-10. Instala todas as bibliotecas básicas para o projeto
-    `$ uv sync`
+**10.** Instala todas as bibliotecas básicas para o projeto
+`$ uv sync`
 
-11. Rodar o script python para esconder dados sensíveis (senhas, parâmetros e etc)
-    `$ python extrair_chaves_s3.py`
+**11.** Rodar o script python para esconder dados sensíveis (senhas, parâmetros e etc)
+`$ python extrair_chaves_s3.py`
+
+**12.** Validação e deploy
+`$ databricks bundle validate --profile DEFAULT`
+
+**Resposta:**
+Name: **verticeaovivo**
+Target: **dev**
+Workspace:
+Host: **https://dbc-068fb8ed-9845.cloud.databricks.com**
+User: **rt.data.eng.analytics@gmail.com**
+Path: **/Workspace/Users/rt.data.eng.analytics@gmail.com/.bundle/verticeaovivo/dev**
+
+`$ databricks bundle deploy   --profile DEFAULT`
 
 ## Árvore do ProjetoControlTowerAoVivo / verticeaovivo
 
@@ -437,19 +450,92 @@ https://docs.databricks.com/dev-tools/bundles/deployment-modes.html).
 4. To run a job or pipeline, use the "run" command:
 
 ```
-
 $ databricks bundle run
-
 ```
 
-5. Finally, to run tests locally, use `pytest`:
+---
+
+## 5. Testes unitários
+
+Os testes ficam em `verticeaovivo/tests/` e cobrem os scripts de apoio em
+`verticeaovivo/src/verticeaovivo/main/scripts/`. Nenhum teste acessa o Databricks:
+as chamadas ao `databricks` CLI, as esperas e as execuções de SQL são substituídas
+por versões falsas (`monkeypatch`), e os arquivos são criados em pastas temporárias
+(`tmp_path`), sem tocar no bundle real.
+
+### Estrutura
 
 ```
-
-$ uv run pytest
-
+verticeaovivo/tests/
+├── __init__.py                  # torna tests um pacote (permite `from tests.apoio import ...`)
+├── apoio.py                     # carregar_script(): carrega um script pelo caminho do arquivo
+├── conftest.py                  # hooks do pytest que gravam os arquivos de log
+├── test_extrair_chaves_s3.py    # testes de extrair_chaves_s3.py
+├── test_run_sql.py              # testes de run_sql.py
+└── log/                         # logs gerados a cada execução (fora do Git)
 ```
 
+Os scripts são carregados pelo caminho do arquivo (`apoio.carregar_script`) porque
+`src/verticeaovivo/main.py` tem o mesmo nome da pasta `src/verticeaovivo/main/`,
+o que impede `import verticeaovivo.main.scripts`.
+
+### O que é testado
+
+| Arquivo a ser testado  | Testes                      | Cobertura                                                                                                                                                                                                                                                                                                                  |
+| ---------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `extrair_chaves_s3.py` | `test_extrair_chaves_s3.py` | troca das chaves por `${var.…}` no YAML do job; gravação do `variable-overrides.json` preservando variáveis existentes; erro claro quando falta a chave, quando falta o job e quando o script roda duas vezes (sem perder as chaves)                                                                                       |
+| `run_sql.py`           | `test_run_sql.py`           | divisão do `.sql` em statements (`;` em string, comentário e bloco `$$`); chamada ao `databricks` CLI e tratamento de erro; escolha do warehouse padrão; envio e espera da statement; impressão do resultado; fluxo do `main` (`--warehouse`, `--quiet`, `--continuar`, parada na primeira falha, `--profile` obrigatório) |
+
+### Como executar
+
+Na pasta do bundle (`verticeaovivo`), com o `uv` usando o `.venv` do projeto
+(o `pytest` está no grupo `dev` do `pyproject.toml`):
+
+```powershell
+cd verticeaovivo
+uv run pytest tests                                      # todos os testes
+uv run pytest tests -v                                   # lista cada teste pelo nome
+uv run pytest tests/test_run_sql.py                      # um arquivo
+uv run pytest tests/test_run_sql.py::test_main_tudo_ok   # um teste
+uv run pytest tests -k dividir                           # testes com "dividir" no nome
+uv run pytest tests -x                                   # para na primeira falha
 ```
 
+Se aparecer o aviso de que `VIRTUAL_ENV` não corresponde ao `.venv` do projeto, há
+outro ambiente virtual ativo no terminal: rode `deactivate` antes. No VS Code, os
+testes também rodam pelo painel **Testing**, com o interpretador `verticeaovivo\.venv`.
+
+### Arquivos de log
+
+A cada execução, o `tests/conftest.py` grava **um arquivo de log por arquivo de teste**
+em `tests/log/<arquivo de teste>.log` (por exemplo, `tests/log/test_run_sql.log`).
+O arquivo é recriado a cada execução: guarda apenas o resultado da última.
+
+Layout:
+
+- **Primeira linha** (cabeçalho, obrigatória):
+  `dd/mm/yyyy hh:mm:ss.ssss | Projeto: <nome do projeto> - Hostname: <nome do host>`
+  O nome do projeto vem de `[project].name` do `pyproject.toml`, e o hostname do
+  `socket.gethostname()`.
+- **Demais linhas**, uma por teste:
+  `dd/mm/yyyy hh:mm:ss.ssss | <o que foi executado> | SUCESSO ou ERRO`
+
+O campo _o que foi executado_ é a primeira linha da docstring do teste (ou o nome da
+função, se não houver docstring). Em testes parametrizados, o id do caso vem entre
+colchetes, como `[bloco-dolar]`. Se uma fixture quebrar antes ou depois do teste, a
+linha recebe `(setup)` ou `(teardown)` e o resultado `ERRO`.
+
+Exemplo (`tests/log/test_extrair_chaves_s3.log`):
+
 ```
+[28/10/2026 09:51:33.7121] | Projeto: verticeaovivo - Hostname: RT-WIN-SVR
+[28/10/2026 09:51:33.7131] | extrair_chaves: troca as chaves do YAML por ${var.…} e devolve os valores | SUCESSO
+[28/10/2026 09:51:33.7141] | extrair_chaves: YAML sem a chave gera ValueError dizendo qual faltou | SUCESSO
+[28/10/2026 09:51:33.7161] | extrair_chaves: YAML já com ${var.…} é recusado | SUCESSO
+```
+
+Os logs ficam fora do Git (regras `*.log` e `[Ll]og/` do `.gitignore`).
+
+Para incluir um teste novo no log, basta criar a função `test_...` em `tests/` com uma
+docstring de uma linha descrevendo o que ela verifica: o hook grava a linha
+automaticamente.
