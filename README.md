@@ -18,23 +18,28 @@ O projeto **verticeaovivo** foi gerado utilizando o template **default-python**.
 
 3. Listar os dados do profile
    `$ databricks auth describe --profile DEFAULT`
+
    Host: https://dbc-068fb8ed-9845.cloud.databricks.com
+
    User: rt.data.eng.analytics@gmail.com
+
    Authenticated with: databricks-cli
-   Token storage: secure, OS keyring (service: databricks-cli) (from auth_storage in [__settings__] section of C:/Users/rtoni/.databrickscfg)
+
+   Token storage: secure, OS keyring (service: databricks-cli) (from auth_storage in [__settings__] section of C:/Users/<user>/.databrickscfg)
 
 ---
 
-Current configuration:
-✓ host: https://dbc-068fb8ed-9845.cloud.databricks.com (from C:\Users\<user>/.databrickscfg config file)
-✓ account_id: f06cd2b8-6224-4fe8-b608-367d9ebecb06 (from C:\Users\<user>/.databrickscfg config file)
-✓ workspace_id: 7474645395795496 (from C:\Users\<user>/.databrickscfg config file)
-✓ profile: DEFAULT (from --profile flag)
-✓ databricks_cli_path: C:\Users\<user>\AppData\Local\Microsoft\WinGet\Packages\Databricks.DatabricksCLI_Microsoft.Winget.Source_8wekyb3d8bbwe\databricks.exe  
- ✓ auth_type: databricks-cli (from C:\Users\<user>/.databrickscfg config file)
-✓ cloud: AWS
-✓ audience: https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/v1/token
-✓ discovery_url: https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/.well-known/oauth-authorization-server
+**Current configuration:**
+
+**✓ host:** https://dbc-068fb8ed-9845.cloud.databricks.com (from C:\Users\<user>/.databrickscfg config file)
+**✓ account_id:** f06cd2b8-6224-4fe8-b608-367d9ebecb06 (from C:\Users\<user>/.databrickscfg config file)
+**✓ workspace_id:** 7474645395795496 (from C:\Users\<user>/.databrickscfg config file)
+**✓ profile:** DEFAULT (from --profile flag)
+**✓ databricks_cli_path:** C:\Users\<user>\AppData\Local\Microsoft\WinGet\Packages\Databricks.DatabricksCLI_Microsoft.Winget.Source_8wekyb3d8bbwe\databricks.exe
+**✓ auth_type:** databricks-cli (from C:\Users\<user>/.databrickscfg config file)
+**✓ cloud:** AWS
+**✓ audience:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/v1/token
+**✓ discovery_url:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/.well-known/oauth-authorization-server
 
 4. Inicializar o DATABRICKS no repositório (com padrão python)
    `$ databricks bundle init default-python`
@@ -367,6 +372,7 @@ Current configuration:
 ├── ⚙️ .gitignore
 ├── 📝 README.md
 └── 📄 commits_iniciais.sh
+```
 
 ## Getting started
 
@@ -437,9 +443,12 @@ $ databricks bundle run
 ```
 
 5. Finally, to run tests locally, use `pytest`:
+
 ```
 
 $ uv run pytest
+
+```
 
 ```
 
