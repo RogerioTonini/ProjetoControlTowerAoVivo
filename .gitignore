@@ -3,10 +3,8 @@
 # ============================================================
 
 # local course material (large binaries)
-#docs/*.pdf
-#**/docs/*
-img/.
-**/img/.
+docs/
+img/
 
 # claude code local worktrees
 .claude/*
