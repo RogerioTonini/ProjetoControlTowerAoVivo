@@ -1,0 +1,52 @@
+resources:
+  jobs:
+    vertice_farol:
+      name: vertice_farol
+      description: "Torre de controle da Vértice: ingestão da bronze, conferência e o medalhão (silver)"
+      tasks:
+        - task_key: ingestao_feriados
+          disabled: false
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/ingestao/01_ingestao_api.py
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: ingestao_data_lake
+          disabled: false
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              AWS_ACCESS_KEY_ID: ${var.s3_access_key_id}
+              AWS_BUCKET: datalake_Vertice
+              AWS_DEFAULT_REGION: us-east-1
+              AWS_SECRET_ACCESS_KEY: ${var.s3_secret_access_key}
+              S3_ENDPOINT: https://qjunjiuvowxfgykgsguw.storage.supabase.co/storage/v1/s3
+            notebook_path: ../src/ingestao/02_ingestao_boto3_gabarito.py
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: conferencia_bronze
+          depends_on:
+            - task_key: ingestao_feriados
+            - task_key: ingestao_data_lake
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/conferencia/00-conferencia-bronze.sql
+              source: WORKSPACE
+        - task_key: medalhao
+          depends_on:
+            - task_key: conferencia_bronze
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.vertice_medalhao.id}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}
