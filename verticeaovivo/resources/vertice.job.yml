@@ -1,0 +1,88 @@
+# Job vertice_farol: a Torre de Controle da Vértice, toda segunda às 6h (America/Sao_Paulo).
+#
+#   ingestao_feriados ──┐
+#                       ├── conferencia_bronze ── medalhao ──┬── testes_de_qualidade
+#   ingestao_data_lake ─┘                                    └── status_com_ia
+#
+# 1. ingestao_feriados    notebook: feriados da BrasilAPI em bronze.feriados
+# 2. ingestao_data_lake   notebook: baixa os arquivos do Supabase Storage (boto3), pousa no
+#                         volume bronze.raw e recria as 9 tabelas da bronze
+# 3. conferencia_bronze   sql_task: confere a contagem das 9 tabelas da bronze (para se faltar linha)
+# 4. medalhao             pipeline vertice_medalhao: silver (7 tabelas) e gold
+# 5. testes_de_qualidade  sql_task: 10 testes da silver e da gold (raise_error se falhar)
+# 6. status_com_ia        sql_task: o texto do status vira coluna (ai_classify + ai_extract),
+#                         MERGE incremental em gold.status_estruturado
+#
+# No target dev o agendamento fica pausado pelo preset trigger_pause_status.
+resources:
+  jobs:
+    vertice_farol:
+      name: vertice_farol
+      description: "Torre de controle da Vértice: ingestão da bronze, conferência, medalhão (silver e gold), testes de qualidade e status estruturado com IA"
+      schedule:
+        quartz_cron_expression: "0 0 6 ? * MON"
+        timezone_id: America/Sao_Paulo
+      tasks:
+        - task_key: ingestao_feriados
+          disabled: false
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/ingestao/01_ingestao_api.py
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: ingestao_data_lake
+          disabled: false
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              AWS_ACCESS_KEY_ID: ${var.s3_access_key_id}
+              AWS_BUCKET: datalake_Vertice
+              AWS_DEFAULT_REGION: us-east-1
+              AWS_SECRET_ACCESS_KEY: ${var.s3_secret_access_key}
+              S3_ENDPOINT: https://qjunjiuvowxfgykgsguw.storage.supabase.co/storage/v1/s3
+            notebook_path: ../src/ingestao/02_ingestao_boto3_gabarito.py
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: conferencia_bronze
+          depends_on:
+            - task_key: ingestao_feriados
+            - task_key: ingestao_data_lake
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/conferencia/00-conferencia-bronze.sql
+              source: WORKSPACE
+        - task_key: medalhao
+          depends_on:
+            - task_key: conferencia_bronze
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.vertice_medalhao.id}
+        - task_key: testes_de_qualidade
+          depends_on:
+            - task_key: medalhao
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/testes/testes.sql
+              source: WORKSPACE
+        - task_key: status_com_ia
+          depends_on:
+            - task_key: medalhao
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/ia/status_estruturado.sql
+              source: WORKSPACE
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      # uma execução por vez: duas ao mesmo tempo apagariam a bronze uma da outra
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}
