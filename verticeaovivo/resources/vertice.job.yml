@@ -2,7 +2,7 @@ resources:
   jobs:
     vertice_farol:
       name: vertice_farol
-      description: "Torre de controle da Vértice: ingestão da bronze, conferência e o medalhão (silver)"
+      description: "Torre de controle da Vértice: ingestão da bronze, conferência, o medalhão (silver e gold) e os testes de qualidade"
       tasks:
         - task_key: ingestao_feriados
           disabled: false
@@ -42,6 +42,14 @@ resources:
             - task_key: conferencia_bronze
           pipeline_task:
             pipeline_id: ${resources.pipelines.vertice_medalhao.id}
+        - task_key: testes_de_qualidade
+          depends_on:
+            - task_key: medalhao
+          sql_task:
+            warehouse_id: ${var.warehouse_id}
+            file:
+              path: ../src/testes/testes.sql
+              source: WORKSPACE
       email_notifications:
         no_alert_for_skipped_runs: false
       max_concurrent_runs: 1
