@@ -1,4 +1,4 @@
-# Prompt 01 · ocorrências da execução
+# Prompt 01 - Ocorrências da execução
 
 Registro do que aconteceu ao executar o `llm/prompt_01.md` (arrumar o bundle, conferir a
 bronze e montar a silver) no bundle `verticeaovivo`, em 28/10/2026, no workspace Free
@@ -112,6 +112,41 @@ lake. O próprio prompt já previa esse caso ("o arquivo chegou sem acento: 'Cor
    baixado para uma pasta temporária, com um `pdf_simples.py` de mentira para pular os PDFs.
    O Claude Code não pôde executar o gerador (a permissão de código externo foi negada), então o
    **usuário rodou com `!`**.
+   Os comandos executados foram:
+   
+   ```powershell
+   .venv\Scripts\python.exe -I "C:\Users\rtoni\AppData\Local\Temp\claude\D--Git-Projetos-ProjetoControlTowerAoVivo-verticeaovivo\cada488b-d8f8-4a76-994d-7c61d8e8d5ce\scratchpad\gerador\gerar_dataset.py" --saida "C:\Users\rtoni\AppData\Local\Temp\claude\D--Git-Projetos-ProjetoControlTowerAoVivo-verticeaovivo\cada488b-d8f8-4a76-994d-7c61d8e8d5ce\scratchpad\dados" --seed 42
+   ```
+  
+  **Resultado:**
+
+  ```text
+  Dataset da Vértice Tecnologia gerado em C:\Users\rtoni\AppData\Local\Temp\claude\D--Git-Projetos-ProjetoControlTowerAoVivo-verticeaovivo\cada488b-d8f8-4a76-994d-7c61d8e8d5ce\scratchpad\dados/ (seed 42, hoje = 2026-10-16)
+  projetos                    60
+  tarefas                  4.917
+  status_semanal           3.911
+  custos                  23.640
+  colaboradores              523
+  apontamentos            30.883
+  entregas_fornecedor        640
+  pdf_contratos                8
+  arquivos_excel              20
+  arquivos_clickup            25
+  arquivos_msproject          15
+  ```
+
+  ```powershell
+  .venv\Scripts\python.exe "C:\Users\rtoni\AppData\Local\Temp\claude\D--Git-Projetos-ProjetoControlTowerAoVivo-verticeaovivo\cada488b-d8f8-4a76-994d-7c61d8e8d5ce\scratchpad\subir_excel_faltantes.py" "C:\Users\rtoni\AppData\Local\Temp\claude\D--Git-Projetos-ProjetoControlTowerAoVivo-verticeaovivo\cada488b-d8f8-4a76-994d-7c61d8e8d5ce\scratchpad\dados"
+  ```
+
+  **Resultado:**
+
+  ```text
+enviado excel/PRJ-020 - Core bancario - modulo de cr v5 FINAL.xlsx  (78 linhas, com o TOTAL)
+enviado excel/PRJ-021 - Integracao omnichannel - Sup v5 FINAL.xlsx  (85 linhas, com o TOTAL)
+total: 163 linhas (esperado 163 = 1663 - 1500)
+  ```
+
 2. Foi criado um script de upload (`subir_excel_faltantes.py`, fora do repositório). Ele lê as
    chaves do `variable-overrides.json` **só para leitura**, troca o acento por ASCII
    (`unicodedata` NFKD) e grava em `datalake_Vertice/excel/`. Como manuseia as chaves,
