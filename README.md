@@ -32,13 +32,21 @@ Token storage: secure, OS keyring (service: databricks-cli) (from auth_storage i
 **Current configuration:**
 
 **✓ host:** https://dbc-068fb8ed-9845.cloud.databricks.com (from C:\Users\<user>/.databrickscfg config file)
+
 **✓ account_id:** f06cd2b8-6224-4fe8-b608-367d9ebecb06 (from C:\Users\<user>/.databrickscfg config file)
+
 **✓ workspace_id:** 7474645395795496 (from C:\Users\<user>/.databrickscfg config file)
+
 **✓ profile:** DEFAULT (from --profile flag)
+
 **✓ databricks_cli_path:** C:\Users\<user>\AppData\Local\Microsoft\WinGet\Packages\Databricks.DatabricksCLI_Microsoft.Winget.Source_8wekyb3d8bbwe\databricks.exe
+
 **✓ auth_type:** databricks-cli (from C:\Users\<user>/.databrickscfg config file)
+
 **✓ cloud:** AWS
+
 **✓ audience:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/v1/token
+
 **✓ discovery_url:** https://dbc-068fb8ed-9845.cloud.databricks.com/oidc/.well-known/oauth-authorization-server
 
 **4.** Inicializar o DATABRICKS no repositório (com padrão python)
@@ -94,289 +102,79 @@ Path: **/Workspace/Users/rt.data.eng.analytics@gmail.com/.bundle/verticeaovivo/d
 
 ```
 ├── 📁 .claude
+├── 📁 .databricks
+├── 📁 .git
+│   └── 📁 hooks
+│       └── 📄 commit-msg                                       # padrão dos commits
 ├── 📁 docs
-│   ├── 📁 aula-01-ingestao-manual
-│   │   ├── 📁 json
-│   │   │   ├── ⚙️ dashboard-bronze.lvdash.json
-│   │   │   └── ⚙️ genie-bronze.json
-│   │   ├── 📁 notebooks
-│   │   │   ├── 📁 em-branco
-│   │   │   │   ├── 📄 exemplo-00-time-travel.sql
-│   │   │   │   ├── 📄 exemplo-01-a-05-sql-na-bronze.sql
-│   │   │   │   ├── 📄 exemplo-06-quanto-custa-o-atraso.sql
-│   │   │   │   └── 📄 exemplo-07-ler-pdf.sql
-│   │   │   └── 📁 resolvidos
-│   │   │       ├── 📄 exemplo-00-time-travel.sql
-│   │   │       ├── 📄 exemplo-01-a-05-sql-na-bronze.sql
-│   │   │       ├── 📄 exemplo-06-quanto-custa-o-atraso.sql
-│   │   │       └── 📄 exemplo-07-ler-pdf.sql
-│   │   ├── 📁 python
-│   │   │   ├── 🐍 00-carregar-dados.py
-│   │   │   └── 🐍 gerar_dashboard.py
-│   │   ├── 📁 sql
-│   │   │   ├── 📄 00-setup-catalogo.sql
-│   │   │   ├── 📄 01-ingestao-bronze.sql
-│   │   │   ├── 📄 99-verificacao.sql
-│   │   │   ├── 📄 dashboard-dataset-custos.sql
-│   │   │   ├── 📄 dashboard-dataset-projetos.sql
-│   │   │   ├── 📄 exemplo-00-time-travel.sql
-│   │   │   ├── 📄 exemplo-01-a-05-sql-na-bronze.sql
-│   │   │   ├── 📄 exemplo-06-quanto-custa-o-atraso.sql
-│   │   │   ├── 📄 exemplo-07-ler-pdf.sql
-│   │   │   └── 📝 roteiro-execucao-scripts-sql.md
-│   │   ├── 📁 validacao-execucao
-│   │   │   └── 🖼️ resultados.png
-│   │   ├── 📝 README.md
-│   │   ├── 📝 passo-a-passo-dashboard-e-genie.md
-│   │   └── 📝 roteiro-genie-e-dashboard.md
-│   ├── 📁 aula-02-python-engenheiro
-│   │   ├── 🐍 00_aquecimento_python.py
-│   │   ├── 🐍 00_aquecimento_python_gabarito.py
-│   │   ├── 🐍 01_ingestao_api.py
-│   │   ├── 🐍 01_ingestao_api_gabarito.py
-│   │   ├── 🐍 02_ingestao_boto3.py
-│   │   ├── 🐍 02_ingestao_boto3_gabarito.py
-│   │   └── 📝 README.md
-│   ├── 📁 aula-03-modelagem-claude-code
-│   │   ├── 📁 claude-code
-│   │   │   ├── 📁 meu-vertice
-│   │   │   │   └── 📝 README.md
-│   │   │   ├── 📁 prd
-│   │   │   │   ├── 📄 00-reset.sh
-│   │   │   │   ├── 📄 99-verificacao.sql
-│   │   │   │   ├── 📝 CLAUDE.md
-│   │   │   │   ├── 📝 bundle-na-mao.md
-│   │   │   │   ├── 📝 prompt-01-silver.md
-│   │   │   │   ├── 📝 prompt-02-gold.md
-│   │   │   │   ├── 📝 prompt-03-job-completo.md
-│   │   │   │   └── 📝 prompt-04-dashboard.md
-│   │   │   ├── 📁 vertice
-│   │   │   │   ├── 📁 resources
-│   │   │   │   │   ├── ⚙️ dashboard-portfolio.lvdash.json
-│   │   │   │   │   ├── ⚙️ dashboard.dashboard.yml
-│   │   │   │   │   ├── ⚙️ farol.geniespace.json
-│   │   │   │   │   ├── ⚙️ genie.genie_space.yml
-│   │   │   │   │   ├── ⚙️ vertice.job.yml
-│   │   │   │   │   └── ⚙️ vertice_medalhao.pipeline.yml
-│   │   │   │   ├── 📁 src
-│   │   │   │   │   ├── 📁 conferencia
-│   │   │   │   │   │   └── 📄 00-conferencia-bronze.sql
-│   │   │   │   │   ├── 📁 gold
-│   │   │   │   │   │   ├── 📄 01-fato-projeto-semana.sql
-│   │   │   │   │   │   └── 📄 02-situacao-e-pessoas.sql
-│   │   │   │   │   ├── 📁 ia
-│   │   │   │   │   │   └── 📄 status_estruturado.sql
-│   │   │   │   │   ├── 📁 ingestao
-│   │   │   │   │   │   ├── 🐍 01_ingestao_api.py
-│   │   │   │   │   │   └── 🐍 02_ingestao_boto3.py
-│   │   │   │   │   ├── 📁 metricas
-│   │   │   │   │   │   └── 📄 metricas.sql
-│   │   │   │   │   ├── 📁 ml
-│   │   │   │   │   │   ├── 📄 01-features.sql
-│   │   │   │   │   │   ├── 🐍 02-modelo.py
-│   │   │   │   │   │   └── 🐍 03-score.py
-│   │   │   │   │   ├── 📁 silver
-│   │   │   │   │   │   ├── 📄 01-projetos.sql
-│   │   │   │   │   │   ├── 📄 02-tarefas.sql
-│   │   │   │   │   │   ├── 📄 03-status-e-custos.sql
-│   │   │   │   │   │   ├── 📄 04-pessoas.sql
-│   │   │   │   │   │   └── 📄 05-fornecedores.sql
-│   │   │   │   │   └── 📁 testes
-│   │   │   │   │       └── 📄 testes.sql
-│   │   │   │   └── ⚙️ databricks.yml
-│   │   │   ├── 📝 APRENDIZADOS.md
-│   │   │   └── 📝 README.md
-│   │   └── 📝 README.md
-│   ├── 📁 aula-04-produtos-de-dados-ia
-│   │   ├── 📁 bonus
-│   │   │   ├── 📁 agente
-│   │   │   │   ├── 📄 01-contratos.sql
-│   │   │   │   ├── ⚙️ contratos.job.yml
-│   │   │   │   ├── ⚙️ diretoria-contratos-genie.json
-│   │   │   │   └── 🐍 gerar_genie.py
-│   │   │   ├── 📁 meu-agente
-│   │   │   │   └── 📝 README.md
-│   │   │   ├── 📄 99-verificacao-contratos.sql
-│   │   │   ├── 📝 CLAUDE.md
-│   │   │   ├── 📝 README.md
-│   │   │   ├── ⚙️ genie-benchmark-contratos.json
-│   │   │   └── 📝 prompt-agente-de-contratos.md
-│   │   ├── 📁 minha-torre
-│   │   │   └── 📝 README.md
-│   │   ├── 📁 notebooks
-│   │   │   ├── 📄 01-o-que-o-modelo-vale.sql
-│   │   │   └── 🐍 02-o-vazamento-de-dado.py
-│   │   ├── 📁 prd
-│   │   │   ├── 📄 99-limpar-aula-04.sh
-│   │   │   ├── 📄 99-limpar-modelo.sh
-│   │   │   ├── 📝 CLAUDE.md
-│   │   │   ├── ⚙️ genie-benchmark-diretoria.json
-│   │   │   ├── 📝 prompt-01-modelo.md
-│   │   │   ├── 📝 prompt-02-genie.md
-│   │   │   ├── 📝 prompt-03-app.md
-│   │   │   └── 📝 prompt-04-aprovacao-lakebase.md
-│   │   ├── 📁 torre-app
-│   │   │   ├── 📁 client
-│   │   │   │   ├── 📁 public
-│   │   │   │   │   ├── 🖼️ apple-touch-icon.png
-│   │   │   │   │   ├── 🖼️ favicon-16x16.png
-│   │   │   │   │   ├── 🖼️ favicon-192x192.png
-│   │   │   │   │   ├── 🖼️ favicon-32x32.png
-│   │   │   │   │   ├── 🖼️ favicon-48x48.png
-│   │   │   │   │   ├── 🖼️ favicon-512x512.png
-│   │   │   │   │   ├── 🖼️ favicon.svg
-│   │   │   │   │   └── 📄 site.webmanifest
-│   │   │   │   ├── 📁 src
-│   │   │   │   │   ├── 📁 pages
-│   │   │   │   │   │   ├── 📁 decisoes
-│   │   │   │   │   │   │   └── 📄 DecisoesPage.tsx
-│   │   │   │   │   │   ├── 📁 genie
-│   │   │   │   │   │   │   └── 📄 GeniePage.tsx
-│   │   │   │   │   │   ├── 📁 projetos
-│   │   │   │   │   │   │   └── 📄 ProjetosPage.tsx
-│   │   │   │   │   │   └── 📁 simulador
-│   │   │   │   │   │       └── 📄 SimuladorPage.tsx
-│   │   │   │   │   ├── 📄 App.tsx
-│   │   │   │   │   ├── 📄 ErrorBoundary.tsx
-│   │   │   │   │   ├── 🎨 index.css
-│   │   │   │   │   ├── 📄 main.tsx
-│   │   │   │   │   └── 📄 vite-env.d.ts
-│   │   │   │   ├── ⚙️ components.json
-│   │   │   │   ├── 🌐 index.html
-│   │   │   │   ├── 📄 postcss.config.js
-│   │   │   │   ├── 📄 tailwind.config.ts
-│   │   │   │   └── 📄 vite.config.ts
-│   │   │   ├── 📁 config
-│   │   │   │   ├── 📁 metric-views
-│   │   │   │   │   ├── ⚙️ definitions.json
-│   │   │   │   │   └── ⚙️ metadata.generated.json
-│   │   │   │   └── 📁 queries
-│   │   │   │       ├── 📄 kpis.sql
-│   │   │   │       ├── 📄 pessoas_ociosas.sql
-│   │   │   │       └── 📄 projetos_risco.sql
-│   │   │   ├── 📁 server
-│   │   │   │   ├── 📁 routes
-│   │   │   │   │   ├── 📄 decisoes.ts
-│   │   │   │   │   └── 📄 score.ts
-│   │   │   │   ├── 📄 decisoes.test.ts
-│   │   │   │   └── 📄 server.ts
-│   │   │   ├── 📁 shared
-│   │   │   │   └── 📁 appkit-types
-│   │   │   │       ├── 📄 analytics.d.ts
-│   │   │   │       ├── 📄 database.d.ts
-│   │   │   │       └── 📄 metric-views.d.ts
-│   │   │   ├── ⚙️ .gitignore
-│   │   │   ├── ⚙️ .prettierignore
-│   │   │   ├── ⚙️ .prettierrc.json
-│   │   │   ├── 📝 CLAUDE.md
-│   │   │   ├── 📝 README.md
-│   │   │   ├── ⚙️ app.yaml
-│   │   │   ├── ⚙️ appkit.plugins.json
-│   │   │   ├── ⚙️ databricks.yml
-│   │   │   ├── 📄 eslint.config.js
-│   │   │   ├── ⚙️ package-lock.json
-│   │   │   ├── ⚙️ package.json
-│   │   │   ├── ⚙️ tsconfig.client.json
-│   │   │   ├── ⚙️ tsconfig.json
-│   │   │   ├── ⚙️ tsconfig.server.json
-│   │   │   ├── ⚙️ tsconfig.shared.json
-│   │   │   ├── 📄 tsdown.server.config.ts
-│   │   │   └── 📄 vitest.config.ts
-│   │   ├── 📄 99-verificacao.sql
-│   │   ├── 📝 APRENDIZADOS.md
-│   │   ├── 📝 README.md
-│   │   └── 📝 pitch.md
-│   └── 📁 interacoes-gemini
-│       ├── 📝 2026-10-23-sessao-databricks-cli.md
-│       └── 📝 2026-10-27-sessao-erro-databricks-bundle.md
-├── 📁 img
-│   ├── 📁 logos
-│   │   ├── 🖼️ clickup.svg
-│   │   ├── 🖼️ excel.svg
-│   │   └── 🖼️ msproject.svg
-│   ├── 📝 PRINTS.md
-│   ├── 🖼️ agora-gold.jpg
-│   ├── 🖼️ agora-silver-tarefas.jpg
-│   ├── 🖼️ capa-thumb-youtube.png
-│   ├── 🖼️ erros-databricks-bash.png
-│   ├── 🖼️ logo-jornada-horizontal-branco.png
-│   ├── 🖼️ noite1-catalogo-bronze.jpg
-│   ├── 🖼️ noite1-dashboard-graficos.jpg
-│   ├── 🖼️ noite1-dashboard.jpg
-│   ├── 🖼️ noite1-genie-erra.jpg
-│   ├── 🖼️ noite1-volume-excel.jpg
-│   ├── 🖼️ noite2-bloqueios-ia.jpg
-│   ├── 🖼️ noite2-capacidade.jpg
-│   ├── 🖼️ noite2-dashboard-graficos.jpg
-│   ├── 🖼️ noite2-dashboard.jpg
-│   ├── 🖼️ noite2-fornecedores.jpg
-│   ├── 🖼️ noite2-genie-recomendacao.jpg
-│   ├── 🖼️ noite2-genie.jpg
-│   ├── 🖼️ noite2-gold-v2.jpg
-│   ├── 🖼️ noite2-job-v2.jpg
-│   ├── 🖼️ noite2-job.jpg
-│   ├── 🖼️ noite2-metric-view.jpg
-│   ├── 🖼️ noite2-pessoas.jpg
-│   ├── 🖼️ noite2-pipeline-v2.jpg
-│   ├── 🖼️ noite2-pipeline.jpg
-│   ├── 🖼️ noite3-dashboard-graficos.jpg
-│   ├── 🖼️ noite3-dashboard.jpg
-│   ├── 🖼️ noite3-job-completo.jpg
-│   ├── 🖼️ noite3-job-passo1.jpg
-│   ├── 🖼️ noite3-job-timeline.jpg
-│   ├── 🖼️ noite3-mlflow.jpg
-│   ├── 🖼️ noite3-modelo-ml.jpg
-│   ├── 🖼️ noite3-modelo.jpg
-│   ├── 🖼️ noite3-pipeline-tabelas.jpg
-│   ├── 🖼️ noite3-score-v2.jpg
-│   ├── 🖼️ noite3-score.jpg
-│   ├── 🖼️ noite4-app-decisoes.jpg
-│   ├── 🖼️ noite4-app-perguntar.jpg
-│   ├── 🖼️ noite4-app-projetos.jpg
-│   ├── 🖼️ noite4-app-simulador.jpg
-│   ├── 🖼️ noite4-contratos-tipado.jpg
-│   ├── 🖼️ noite4-contratos.jpg
-│   ├── 🖼️ noite4-genie-contratos.jpg
-│   ├── 🖼️ ontem-clickup-json.jpg
-│   ├── 🖼️ ontem-excel-sujo.jpg
-│   ├── 🖼️ ontem-msproject-xml.jpg
-│   ├── 🖼️ recurso-app-authorize.jpg
-│   ├── 🖼️ recurso-catalogo.jpg
-│   ├── 🖼️ recurso-compute-lakebase.jpg
-│   ├── 🖼️ recurso-genie-instrucoes.jpg
-│   ├── 🖼️ recurso-genie-perguntas.jpg
-│   ├── 🖼️ recurso-ingestao-conectores.jpg
-│   ├── 🖼️ recurso-jobs-pipelines.jpg
-│   ├── 🖼️ recurso-lakebase-projeto.jpg
-│   ├── 🖼️ recurso-lakebase-tabela.jpg
-│   ├── 🖼️ recurso-lineage-grafo.jpg
-│   ├── 🖼️ recurso-lineage-lista.jpg
-│   ├── 🖼️ recurso-metric-view.jpg
-│   ├── 🖼️ recurso-notebook.jpg
-│   ├── 🖼️ recurso-query-history.jpg
-│   ├── 🖼️ recurso-serverless.jpg
-│   ├── 🖼️ recurso-sql-editor.jpg
-│   ├── 🖼️ recurso-sql-warehouse.jpg
-│   ├── 🖼️ recurso-workspace-bundle.jpg
-│   ├── 🖼️ slide-n3-dag.jpg
-│   ├── 🖼️ slide-n3-dashboard.jpg
-│   ├── 🖼️ slide-n3-gold.jpg
-│   ├── 🖼️ slide-n3-passo1.jpg
-│   ├── 🖼️ slide-n3-silver.jpg
-│   └── 🖼️ slide-n3-timeline.jpg
+│   ├── 📁 aula-01-ingestao-manual                              # aula 01 - Ingestão manual no Databricks
+│   ├── 📁 aula-02-python-engenheiro                            # aula 02 - Ingestão de dados utilizando interface web DATABRICKS 
+│   ├── 📁 aula-03-modelagem-claude-code                        # aula 03 - ingestão de dados utilizando Claude Code
+│   ├── 📁 aula-04-produtos-de-dados-ia                         # aual 04 - Analisando os dados com IA
+├── 📁 img                                                      # imagens dos recursos/produto final
 ├── 📁 verticeaovivo
 │   ├── 📁 .claude
-│   ├── 📁 fixtures
+│   ├── 📁 .databricks
+│   ├── 📁 .pytest_cache
+│   ├── 📁 .ruff_cache
+│   ├── 📁 .venv
+│   ├── 📁 .vscode
+│   ├── 📁 dist
+│   ├── 📁 fixtures                                             # dados de entrada
+│   ├── 📁 llm
+│   │   ├── 📁 ocorrencias
+│   │   │   └── 📝 prompt_01-ocorrencias.md
+│   │   ├── 📁 prd
+│   │   │   └── 📝 bundle-na-mao.md
+│   │   ├── 📁 template
+│   │   │   └── 📁 prd
+│   │   │       └── 📝 CLAUDE.md
+│   │   ├── 📝 prompt_01.md
+│   │   ├── 📝 prompt_02.md
+│   │   ├── 📝 prompt_03.md
+│   │   └── 📝 prompt_04.md
+│   ├── 📁 log
 │   ├── 📁 resources
-│   │   └── ⚙️ ingestão.job.yml
+│   │   ├── ⚙️ dashboard-portfolio.lvdash.json
+│   │   ├── ⚙️ dashboard.dashboard.yml
+│   │   ├── ⚙️ vertice.job.yml
+│   │   └── ⚙️ vertice_medalhao.pipeline.yml
+│   ├── 📁 scripts
+│   │   ├── 🐍 extrair_chaves_s3.py
+│   │   ├── 🐍 gerar_dashboard.py
+│   │   └── 🐍 run_sql.py
 │   ├── 📁 src
-│   │   ├── 📁 verticeaovivo
-│   │   │   ├── 🐍 __init__.py
-│   │   │   └── 🐍 main.py
-│   │   ├── 🐍 01_ingestao_api.py
-│   │   └── 🐍 02_ingestao_boto3_gabarito.py
+│   │   ├── 📁 conferencia
+│   │   │   └── 📄 00-conferencia-bronze.sql
+│   │   ├── 📁 gold
+│   │   │   ├── 📄 01-fato-projeto-semana.sql
+│   │   │   └── 📄 02-situacao-e-pessoas.sql
+│   │   ├── 📁 ia
+│   │   │   └── 📄 status_estruturado.sql
+│   │   ├── 📁 ingestao
+│   │   │   ├── 🐍 01_ingestao_api.py
+│   │   │   └── 🐍 02_ingestao_boto3_gabarito.py
+│   │   ├── 📁 silver
+│   │   │   ├── 📄 01-projetos.sql
+│   │   │   ├── 📄 02-tarefas.sql
+│   │   │   ├── 📄 03-status-e-custos.sql
+│   │   │   ├── 📄 04-pessoas.sql
+│   │   │   └── 📄 05-fornecedores.sql
+│   │   ├── 📁 testes
+│   │   │   └── 📄 testes.sql
+│   │   └── 📁 verticeaovivo
+│   │       ├── 🐍 __init__.py
+│   │       └── 🐍 main.py
+│   ├── 📁 tests
+│   │   ├── 📁 log
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 apoio.py
+│   │   ├── 🐍 conftest.py
+│   │   ├── 🐍 test_extrair_chaves_s3.py
+│   │   └── 🐍 test_run_sql.py
 │   ├── 📁 tests
 │   ├── 📝 AGENTS.md
+│   ├── 📝 CLAUDE.md
 │   ├── ⚙️ databricks.yml
 │   ├── 🐍 extrair_chaves_s3.py
 │   ├── ⚙️ pyproject.toml
@@ -539,3 +337,68 @@ Os logs ficam fora do Git (regras `*.log` e `[Ll]og/` do `.gitignore`).
 Para incluir um teste novo no log, basta criar a função `test_...` em `tests/` com uma
 docstring de uma linha descrevendo o que ela verifica: o hook grava a linha
 automaticamente.
+
+
+---
+
+## 6. Configurar DBeaver (acesso remoto ao DATABRICKS)
+
+Se for necessário acessar os dados que não seja pelo ambiente do DATABRICKS ou Claude, existe a possibilidade de configurar um CLI.
+Um deles pode ser o **DBeaver**.
+
+**Requisitos:** 
+  **a-)** Você precisará do **ID Serverless Starter Warehouse**.
+  **b-)** Geração do token.
+
+**1.** Abra o DATABRICKS na web.
+
+**2.** No menu lateral a esquerda clique em **Home**. 
+Copie o endereço da URL até **.cloud.databricks.com/** para um bloco de notas.
+**Exemplo:** https://<**abc-123de4fg-5678**>.cloud.databricks.com/,chamarei de **SEU_ID**
+
+**3.** No menu lateral a esquerda clique em **SQL DataWarehoses**
+
+![imagem-01](/img/manual/databricks-01.png)
+
+**4.** Selecione a aba **SQL DataWarehoses** e clique em **Serverless Starter Warehouse**
+
+![imagem-02](/img/manual/databricks-02.png)
+
+**5.** Copie a informação do **ID Serverless Starter Warehouse** em um bloco de notas. Ele é composto de letras, números e o caractere hífen.
+**Exemplo:** abc9d9999e99j9K
+
+![imagem-03](/img/manual/databricks-03.png)
+
+**6.** Para a geração do **token**, clique na sua foto/avatar (canto superior direito) → Settings
+
+**7.** Vá em Developer → Access Tokens
+
+**8.** Clique em **Generate New Token**
+
+**9.** Dê um nome (ex.: DBeaver) e defina o prazo de validade (ou deixe sem expiração)
+Clique Generate e copie o token imediatamente para o bloco de notas — ***ele é exibido só uma vez***
+Ele será utilizado no endereço URL de conexão do Dbeaver.
+
+**10.** No DBeaver, crie uma nova conexão (atalho: **Ctrl + Shift + N**) e selecione o DATABRICKS e clique em **Avançar**. 
+
+![imagem-04](/img/manual/dbeaver-01.png)
+
+Após a instalação automática do driver, será aberta a janela:
+
+![imagem-05](/img/manual/dbeaver-02.png)
+
+**11.** Configurações a serem realizadas:
+
+**a-)** Conectar usando - **URL**
+**b-)** URL JDBC - Eis a URL completa de conexão. Substitua os IDs.
+
+`jdbc:databricks://<SEU_ID>.cloud.databricks.com:443/default;httpPath=/sql/1.0/warehouses/<ID_Serverless_Starter_Warehouse>;AuthMech=3;UID=token;PWD=<ID_TOKEN>`
+
+**c-)** Nome de usuário - seu -mail de conexão com o DATABRICKS
+**d-)** Senha
+**e-)** clique em **Concluir**
+
+**12.** Não ocorrendo nenhum erro de conexão será criada uma conexão ao lado esquerdo da tela. Clique no símbolo **>** ao lado esquerdo
+da conexão e será listado todos os objetos que o banco de dados possui.
+
+![imagem-06](/img/manual/dbeaver-03.png)
